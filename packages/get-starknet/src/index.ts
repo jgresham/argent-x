@@ -1,14 +1,19 @@
 import { defaultProvider } from "starknet"
 
 import App from "./App.svelte"
-import type { StarknetWindowObject } from "./extension.model"
+import type { StarknetWindowObject as SWO } from "./extension.model"
+
+export type StarknetWindowObject = SWO
+export interface GetStarknetOptions {
+  showModal?: boolean
+}
 
 // nextjs ie needs this to be typeof window !== "undefined" as it's replacing it in client bundles
 const IS_BROWSER = typeof window !== "undefined"
 
 export function getStarknet({
   showModal = false,
-}: { showModal?: boolean } = {}): StarknetWindowObject {
+}: GetStarknetOptions = {}): StarknetWindowObject {
   if (globalThis["starknet"]) {
     return globalThis["starknet"]
   } else {
